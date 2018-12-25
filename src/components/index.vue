@@ -1,6 +1,7 @@
 <template>
     <div id="index">
         <h1 id="midtext">今日{{this.$store.state.warm}}</h1>
+        <blackboard></blackboard>
         <swiper :options="swiperOption" ref="mySwiper" id="swiperOption">
             <!-- slides -->
             <swiper-slide class="swiperslide1">I'm Slide 1</swiper-slide>
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+    import blackboard from './blackboard'
     export default {
         name: "index",
         data() {
@@ -43,6 +45,10 @@
                 }
             }
         },
+        components:{
+            blackboard
+        }
+        ,
         methods: {
             tohome() {
                 this.$router.push({path: "/First"});
