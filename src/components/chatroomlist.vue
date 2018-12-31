@@ -1,5 +1,6 @@
 <template>
     <div id="chatroomlist">
+        <HNav></HNav>
 
         <!--<div class="mt-4">-->
             <div v-for="key in (chatroombox[currentPage-1])">

@@ -89,7 +89,7 @@
 
 <style scoped>
     #blackboard{
-        color: wheat;
+        color: white;
         background: rgba(0,0,0,0.5);
         display: flex;
         flex-direction: column;

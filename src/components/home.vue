@@ -1,16 +1,12 @@
 <template>
     <div class="home">
-        <div class="hidden-xs-only">
-      <!--  <div class="header">
-            &lt;!&ndash;<img src="../assets/logo.png" alt="" class="logo">&ndash;&gt;
-        </div>-->
-        <div class="content" >
+        <div class="content hidden-xs-only">
             <div class="left">
                 <el-row class="tac">
                     <el-col :span="24">
                         <el-menu
                                 :router=true
-                                default-active="2"
+                                default-active="Adminlist"
                                 class="el-menu-vertical-demo"
                                 @open="handleOpen"
                                 @close="handleClose"
@@ -20,35 +16,31 @@
                             <el-submenu index="1">
                                 <template slot="title">
                                     <i class="el-icon-location"></i>
-                                    <span>聊天室列表</span>
+                                    <span>聊天室管理</span>
                                 </template>
                                 <el-menu-item-group>
-                                    <template slot="title">聊天室名</template>
-                                    <el-menu-item index="homechildone">homechildone</el-menu-item>
-                                    <el-menu-item index="homechildtwo">homechildtwo</el-menu-item>
+                                    <template slot="title">聊天室概览</template>
+                                    <el-menu-item index="Adminlist">聊天室详细列表</el-menu-item>
                                 </el-menu-item-group>
                             </el-submenu>
-                            <el-menu-item index="2">
-                                <i class="el-icon-menu"></i>
-                                <span slot="title">导航二</span>
-                            </el-menu-item>
-                            <el-menu-item index="3" disabled>
-                                <i class="el-icon-document"></i>
-                                <span slot="title">导航三</span>
-                            </el-menu-item>
-                            <el-menu-item index="4">
-                                <i class="el-icon-setting"></i>
-                                <span slot="title">导航四</span>
-                            </el-menu-item>
+                            <el-submenu index="2">
+                                <template slot="title">
+                                    <i class="el-icon-info"></i>
+                                    <span>新闻管理</span>
+                                </template>
+                                <el-menu-item-group>
+                                    <template slot="title">新闻概览</template>
+                                    <el-menu-item index="Addnews">新闻发布</el-menu-item>
+                                </el-menu-item-group>
+                            </el-submenu>
                         </el-menu>
                     </el-col>
                 </el-row>
             </div>
             <div class="right">
                 <!--路由展示区-->
-                <!--<router-view></router-view>-->
+                <router-view></router-view>
             </div>
-        </div>
         </div>
     </div>
 </template>
