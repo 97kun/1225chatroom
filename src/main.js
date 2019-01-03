@@ -30,7 +30,8 @@ import Chatwindow from './components/chatwindow';
 import Test from './components/test';
 import Adminlist from './components/adminList';
 import Editchatroom from './components/editchatroom';
-import Addnews from './components/addnews'
+import Addnews from './components/addnews';
+import Newslist from './components/newslist'
 
 
 Vue.config.productionTip = false;
@@ -40,7 +41,7 @@ Vue.use(ElementUI);
 Vue.use(SIdentify);
 Vue.use(BootstrapVue);
 Vue.prototype.axios = axios;
-Vue.component('HNav',HNav);
+Vue.component('HNav', HNav);
 
 const routes = [
     {path: "/", component: Index},
@@ -53,10 +54,10 @@ const routes = [
         },
         children: [
             {path: '/Adminlist', component: Adminlist},
-            {path:'/Addnews',component:Addnews}
+            {path: '/Addnews', component: Addnews}
         ]
     },
-    {path:'/Editchatroom',component:Editchatroom,name:'Editchatroom'},
+    {path: '/Editchatroom', component: Editchatroom, name: 'Editchatroom'},
     {
         path: "/First", component: First,
         redirect: '/Login',
@@ -71,6 +72,7 @@ const routes = [
     {path: "/Me", component: Me},
     {path: "/Chatroomlist", component: Chatroomlist},
     {path: "/Chatwindow", component: Chatwindow},
+    {path: "/Newslist", component: Newslist}
     // {path:"*",redirect: '/'}
 ];
 

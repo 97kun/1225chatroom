@@ -7,7 +7,7 @@
         <!--<clock></clock>-->
         <!--<swiperbox></swiperbox>-->
         <div>
-            <b-button variant="success" to="Test">探索世界</b-button>
+            <b-button variant="success" to="Newslist">探索世界</b-button>
             <router-link :to="{path: 'chuan/aaaa',query:{age:16}}">click</router-link>
         </div>
         <!--<router-view></router-view>-->

@@ -1,22 +1,24 @@
 <template>
-    <form id="login" @submit.prevent="submit">
-        <div>
-            <label for="username">用户名:</label>
-            <input type="text" id="username" required placeholder="请输入用户名" v-model="username">
-        </div>
-        <div>
-            <label for="password">密码:</label>
-            <input type="text" id="password" required placeholder="请输登录入密码" v-model="password">
-        </div>
-        <div class="code" @click="refreshCode">
-            <sidentify :identifyCode="identifyCode" class="cav"></sidentify>
-        </div>
-        <div>
-            <label for="yzm">验证码:</label>
-            <input type="text" id="yzm" required placeholder="请输入验证码" v-model="yzm">
-        </div>
-        <button type="submit">提交</button>
-    </form>
+    <div>
+        <form id="login" @submit.prevent="submit">
+            <div>
+                <label for="username">用户名:</label>
+                <input type="text" id="username" required placeholder="请输入用户名" v-model="username">
+            </div>
+            <div>
+                <label for="password">密码:</label>
+                <input type="password" id="password" required placeholder="请输登录入密码" v-model="password">
+            </div>
+            <div class="code" @click="refreshCode">
+                <sidentify :identifyCode="identifyCode" class="cav"></sidentify>
+            </div>
+            <div>
+                <label for="yzm">验证码:</label>
+                <input type="text" id="yzm" required placeholder="请输入验证码" v-model="yzm">
+            </div>
+            <button type="submit">提交</button>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -59,13 +61,21 @@
                 console.log(this.identifyCode);
             },
             submit(e) {
-               /* e.preventDefault();
+                e.preventDefault();
                 console.log("0.0");
                 if (this.yzm !== this.identifyCode) {
-                    console.log("验证码错误")
+                    alert("验证码错误")
                 } else {
-                    console.log("验证码正确操作")
-                }*/
+                    this.axios.post(`zk/im/api/usermessage/selectUser?username=${this.username}&password=${this.password}`)
+                        .then(re=>{
+                            if (!!re.data){
+                                console.log('success')
+                            } else {
+                                console.log('用户名或密码错误')
+                            }
+                        })
+                        .catch(error=>console.log(error))
+                }
             }
         }
     }

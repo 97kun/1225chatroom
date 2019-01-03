@@ -38,7 +38,7 @@
                 ruleForm: {
                     name: '',
                     type: '',
-                    labels: '',
+                    labels: [],
                     describe: '',
                 },
                 rules: {
@@ -72,29 +72,22 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
-            resetdata(re){
-                console.log(!!re.data);
-                if (!!re.data){
-                    this.ruleForm=re.data
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                // 通过 `vm` 访问组件实例
+                let re = to.query;
+                if (!!re.data) {
+                    vm.ruleForm = re.data
                 } else {
-                    this.ruleForm={
+                    vm.ruleForm = {
                         name: '',
                         type: '',
-                        labels: '',
+                        labels: [],
                         describe: ''
                     };
                 }
-            }
-        },
-        created(){
-          this.resetdata(this.$route.query)
-        },
-        watch:{
-            '$route'(to,from){
-                if (to.path==='/Editchatroom'){
-                    this.resetdata(to.query)
-                }
-            }
+            })
         }
     }
 </script>
