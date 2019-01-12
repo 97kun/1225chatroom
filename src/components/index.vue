@@ -2,21 +2,13 @@
     <div id="index">
         <h1 id="midtext">今日{{this.$store.state.warm}}</h1>
         <!--黑板组件-->
-        <blackboard></blackboard>
-
-        <!--<clock></clock>-->
-        <!--<swiperbox></swiperbox>-->
-        <div>
-            <b-button variant="success" to="Newslist">探索世界</b-button>
-            <router-link :to="{path: 'chuan/aaaa',query:{age:16}}">click</router-link>
-        </div>
-        <!--<router-view></router-view>-->
+        <blackboard  class="hidden-md-and-down"></blackboard>
+        <swiperbox class="hidden-lg-and-up"></swiperbox>
     </div>
 </template>
 
 <script>
     import blackboard from './blackboard';
-    import clock from './clock'
     import swiperbox from './swiper'
 
     export default {
@@ -26,7 +18,6 @@
         },
         components: {
             blackboard,
-            clock,
             swiperbox
         }
 
@@ -49,5 +40,10 @@
         color: white;
     }
 
+    @media screen and (max-width: 990px) {
+        #midtext{
+            font-size: 20px;
+        }
+    }
 
 </style>

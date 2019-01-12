@@ -2,8 +2,8 @@
     <div id="swiperbox">
         <swiper :options="swiperOption" ref="mySwiper" id="swiperOption">
             <!-- slides -->
-            <swiper-slide class="swiperslide1">I'm Slide 1</swiper-slide>
-            <swiper-slide class="swiperslide2">I'm Slide 2</swiper-slide>
+            <swiper-slide class="slide swiperslide1"><p swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s">0.0</p></swiper-slide>
+            <swiper-slide class="slide swiperslide2">等你畅聊</swiper-slide>
             <!-- Optional controls -->
             <div class="swiper-pagination" slot="pagination"></div>
             <div class="swiper-button-prev" slot="button-prev"></div>
@@ -20,11 +20,10 @@
         data() {
             return {
                 swiperOption: {
-                    // some swiper options/callbacks
-                    // 所有的参数同 swiper 官方 api 参数
-                    // ...
                     loop: true, // 循环模式选项
                     autoplay: true,
+                    lazy:true,
+                    effect:'cube',
                     // 如果需要分页器
                     pagination: {
                         el: '.swiper-pagination',
@@ -35,6 +34,9 @@
                         nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev',
                     },
+                    observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                    observeParents:true,//修改swiper的父元素时，自动初始化swiper
+
                 }
             }
         },
@@ -54,22 +56,26 @@
 
 <style scoped>
     .swiper-container {
-        width: 500px;
-        height: 300px;
+        width: 100%;
+        height: 100px;
         margin: 20px auto;
         /*display: none;*/
     }
 
     #swiperOption {
         width: 100%;
-        height: 500px;
+        height: 200px;
     }
 
+    .slide{
+        font-size: 15px;
+        color: white;
+    }
     .swiperslide1 {
-        background: url("../assets/images/hu2.jpg") no-repeat;
+        /*background: url("../assets/images/hu2.jpg") no-repeat;*/
     }
 
     .swiperslide2 {
-        background: url("../assets/images/hu1.jpg") no-repeat;
+        /*background: url("../assets/images/hu1.jpg") no-repeat;*/
     }
 </style>

@@ -6,7 +6,7 @@
                     <el-col :span="24">
                         <el-menu
                                 :router=true
-                                default-active="Adminlist"
+                                :default-active="defaultpath"
                                 class="el-menu-vertical-demo"
                                 @open="handleOpen"
                                 @close="handleClose"
@@ -48,12 +48,17 @@
 <script>
     export default {
         name: "home",
+        computed: {
+            defaultpath() {
+                return this.$route.path.split('/')[1]
+            }
+        },
         methods: {
             handleOpen(key, keyPath) {
-                console.log(key, keyPath);
+                // console.log(key, keyPath);
             },
             handleClose(key, keyPath) {
-                console.log(key, keyPath);
+                // console.log(key, keyPath);
             }
         }
     }
@@ -62,8 +67,8 @@
 <style scoped>
     .home {
         width: 100%;
-        height: 100%;
-        position: relative;
+        height: 100vh;
+        position: fixed;
         padding-left: 250px;
         padding-top: 60px;
     }

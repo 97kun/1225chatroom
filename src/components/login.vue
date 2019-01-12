@@ -1,6 +1,11 @@
 <template>
     <div>
-        <form id="login" @submit.prevent="submit">
+        <form id="login" @submit.prevent="submit"
+              v-loading.fullscreen="loading"
+              element-loading-text="登录中，请稍后"
+              element-loading-spinner="el-icon-loading"
+              element-loading-background="rgba(0, 0, 0, 0.8)"
+        >
             <div>
                 <label for="username">用户名:</label>
                 <input type="text" id="username" required placeholder="请输入用户名" v-model="username">
@@ -30,7 +35,8 @@
                 password: '',
                 identifyCodes: "1234567890",
                 identifyCode: "",
-                yzm: ""
+                yzm: "",
+                loading: false
             }
         },
         mounted() {
@@ -39,9 +45,9 @@
         },
         computed: {
             // 三个框都有值时允许button被点击
-           /* allow: function () {
-                return (!(this.username && this.password && this.yzm));
-            }*/
+            /* allow: function () {
+                 return (!(this.username && this.password && this.yzm));
+             }*/
         }
         ,
         methods: {
@@ -58,25 +64,66 @@
                         this.randomNum(0, this.identifyCodes.length)
                         ];
                 }
-                console.log(this.identifyCode);
+                // console.log(this.identifyCode);
             },
             submit(e) {
                 e.preventDefault();
-                console.log("0.0");
                 if (this.yzm !== this.identifyCode) {
-                    alert("验证码错误")
+                    this.open7();
                 } else {
-                    this.axios.post(`zk/im/api/usermessage/selectUser?username=${this.username}&password=${this.password}`)
-                        .then(re=>{
-                            if (!!re.data){
-                                console.log('success')
+                    this.loading = true;
+                    let params = new URLSearchParams();
+                    params.append('username', this.username);
+                    params.append('password', this.password)
+                    this.axios.post(`zk/im/api/usermessage/selectUser`, params)
+                        .then(re => {
+                            this.loading = false;
+                            // console.log(re);
+                            if (!!re.data) {
+                                localStorage.setItem('user', JSON.stringify(re.data));
+                                this.$store.state.user = re.data;
+                                this.$store.state.logined = true;
+                                this.open3();
+                                this.$router.push({path: "/"})
                             } else {
-                                console.log('用户名或密码错误')
+                                this.open4();
                             }
                         })
-                        .catch(error=>console.log(error))
+                        .catch(error => {
+                            console.log(error);
+                            this.loading = false;
+                            this.open6();
+                        })
                 }
-            }
+            },
+            open3() {
+                this.$notify({
+                    title: '成功',
+                    message: '登录成功',
+                    type: 'success'
+                });
+            },
+            open4() {
+                this.$notify({
+                    title: '警告',
+                    message: '用户名或密码错误',
+                    type: 'warning'
+                });
+            },
+            open6() {
+                this.$notify.error({
+                    title: '错误',
+                    message: '登录失败'
+                });
+            },
+            open7() {
+                this.$notify({
+                    title: '警告',
+                    message: '验证码错误',
+                    type: 'warning'
+                });
+            },
+
         }
     }
 </script>

@@ -31,7 +31,9 @@ import Test from './components/test';
 import Adminlist from './components/adminList';
 import Editchatroom from './components/editchatroom';
 import Addnews from './components/addnews';
-import Newslist from './components/newslist'
+import Newslist from './components/newslist';
+import NewsDigital from './components/newsdigital';
+import {Notification} from 'element-ui'
 
 
 Vue.config.productionTip = false;
@@ -72,8 +74,9 @@ const routes = [
     {path: "/Me", component: Me},
     {path: "/Chatroomlist", component: Chatroomlist},
     {path: "/Chatwindow", component: Chatwindow},
-    {path: "/Newslist", component: Newslist}
-    // {path:"*",redirect: '/'}
+    {path: "/Newslist", component: Newslist},
+    {path: "/NewsDigital", component: NewsDigital, name: 'NewsDigital'},
+    {path: "*", redirect: '/'}
 ];
 
 const store = new Vuex.Store({
@@ -81,9 +84,22 @@ const store = new Vuex.Store({
         city: "",
         ganmao: "",
         warm: "",
-        wendu: ""
+        wendu: "",
+        user: JSON.parse(localStorage.getItem('user')),
+        logined: !!JSON.parse(localStorage.getItem('user'))
+    },
+    getters: {
+        loginstatus: state => {
+            return !!state.user.uid;
+        }
+    },
+    mutations: {
+        changelogin(state) {
+            state.logined = false;
+            state.user = {};
+        }
     }
-})
+});
 
 let router = new Router({
     routes,
@@ -102,5 +118,17 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    next()
+    if (!!localStorage.getItem('user')) {
+        next()
+    } else if (to.path === "/Login" || to.path === "/Register") {
+        next()
+    } else {
+        store.commit('changelogin');
+        Notification({
+            title: '警告',
+            message: '请登录',
+            type: 'warning'
+        });
+        next({path: "/First"})
+    }
 });

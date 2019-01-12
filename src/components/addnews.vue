@@ -1,5 +1,9 @@
 <template>
-    <div id="addnews">
+    <div id="addnews"
+         v-loading="loading2"
+         element-loading-text="上传中"
+         element-loading-spinner="el-icon-loading"
+         element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-input
                 placeholder="请输入标题"
                 v-model="newstitle"
@@ -18,7 +22,8 @@
         data() {
             return {
                 newstitle: '',
-                content:''
+                content:'',
+                loading2:false
             }
         },
         methods:{
@@ -30,17 +35,34 @@
                 document.getElementById('subnews').addEventListener('click', function () {
                     // 读取 html
                    _this.content=editor.txt.html();
-                   let time=new Date()
+                   let time=new Date();
                    let data={
                        title:_this.newstitle,
                        content:_this.content,
-                       creattime:time,
-                       user:'ZK'
+                       createtime:time,
+                       sender:'ZK'
                    };
-                   console.log(data)
-                   _this.axios.post('https://wd1843699377fzpwpa.wilddogio.com/news.json',data)
-                       .then(re=>console.log(re))
-                       .catch(error=>console.log(error))
+                    _this.loading2=true;
+                   _this.axios.post('zk/im/api/informnews/insert',data)
+                       .then(re=>{
+                           _this.loading2=false;
+                           _this.$notify({
+                               title: '成功',
+                               message: '发布成功',
+                               type: 'success'
+                           });
+                           _this.newstitle='';
+                           _this.content='';
+                           editor.txt.html('');
+                       })
+                       .catch(error=>{
+                           console.log(error);
+                           _this.loading2=false;
+                           this.$notify.error({
+                               title: '错误',
+                               message: '发布失败'
+                           });
+                       })
                 }, false)
             }
         },
@@ -56,6 +78,6 @@
     flex-direction: column;
 }
 #editor2{
-    height: 500px;
+    height: calc(100vh - 180px);
 }
 </style>

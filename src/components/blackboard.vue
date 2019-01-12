@@ -1,6 +1,6 @@
 <template>
     <div id="blackboard">
-        <ul  class="hidden-md-and-down">
+        <ul>
             <li><span>粉笔颜色：</span><input type="color" id="color"></li>
             <li><input type="range" min="1" max="10" id="px" v-model="pxSize"> 粉笔头粗细： <span id="p">{{pxSize}}</span></li>
             <li><button id="btn1">重置</button></li>
@@ -45,6 +45,8 @@
                 function getmouse(e){
                     let ev=e||window.event;
                     return {'x':ev.layerX,'y':ev.layerY};
+                    // console.log(canvas.offsetLeft)
+                    // return {'x':ev.clientX-canvas.offsetLeft,'y':ev.clientY-canvas.offsetTop}
                 };
                 // 路径起始点设置
                 function beg(obj){
@@ -65,7 +67,7 @@
                 };
                 canvas.onmousedown=function (e) {
                     cv.beginPath();
-                    cv.lineCap="round"
+                    cv.lineCap="round";
                     beg(getmouse(e));
                     canvas.onmousemove=function (e) {
                         act(getmouse(e))
@@ -95,9 +97,13 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        position: relative;
+        height: 606px;
     }
     ul{
         width: 1200px;
+        position: absolute;
+        top: 0;
     }
     ul,li{
         list-style: none;
@@ -110,6 +116,8 @@
         background: url("../assets/images/d80313ae330ff9ea3024197ab1e433d1.jpg") no-repeat;
         background-size: 100% 100%;
         padding: 20px 20px;
+        position: absolute;
+        top: 60px;
     }
     #color{
         width: 50px;

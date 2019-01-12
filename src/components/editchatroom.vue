@@ -3,16 +3,16 @@
         <div class="formbox">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="聊天室名称" prop="name">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.chatRoomName"></el-input>
                 </el-form-item>
                 <el-form-item label="聊天室类型" prop="type">
-                    <el-select v-model="ruleForm.type" placeholder="请选择聊天室类型">
+                    <el-select v-model="ruleForm.chatRoomType" placeholder="请选择聊天室类型">
                         <el-option label="娱乐" value="娱乐"></el-option>
                         <el-option label="动漫" value="动漫"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="标签" prop="labels">
-                    <el-checkbox-group v-model="ruleForm.labels">
+                    <el-checkbox-group v-model="ruleForm.tag">
                         <el-checkbox label="奋青" name="type"></el-checkbox>
                         <el-checkbox label="努力" name="type"></el-checkbox>
                         <el-checkbox label="吃瓜群" name="type"></el-checkbox>
@@ -36,20 +36,20 @@
         data() {
             return {
                 ruleForm: {
-                    name: '',
-                    type: '',
-                    labels: [],
+                    chatRoomName: '',
+                    chatRoomType: '',
+                    tag: [],
                     describe: '',
                 },
                 rules: {
-                    name: [
+                    chatRoomName: [
                         {required: true, message: '请输入活动名称', trigger: 'blur'},
                         {min: 1, max: 10, message: '长度在 1 到 40 个字符', trigger: 'blur'}
                     ],
-                    type: [
+                    chatRoomType: [
                         {required: true, message: '请选择聊天室类型', trigger: 'change'}
                     ],
-                    labels: [
+                    tag: [
                         {type: 'array', required: true, message: '请至少选择一个标签', trigger: 'change'}
                     ],
                     describe: [
@@ -62,7 +62,33 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        let date = new Date();
+                        let data = {
+                            chatRoomName: this.ruleForm.chatRoomName,
+                            chatRoomType: this.ruleForm.chatRoomType,
+                            describe: this.ruleForm.describe,
+                            tag: JSON.stringify(this.ruleForm.tag),
+                            chatId:this.ruleForm.chatId
+                        };
+                        console.log(!!data.chatId)
+                        if (!!data.chatId){
+                            this.axios.post('zk/im/api/chatroom/updateByPrimaryKey', data)
+                                .then(re => {
+                                    alert('修改成功');
+                                    this.$router.go(-1);
+                                })
+                                .catch(error => console.log(error))
+                        } else {
+                            data.creatTime=date;
+                            data.creator='ZK';
+                            this.axios.post('zk/im/api/chatroom/saveChartRoom', data)
+                                .then(re => {
+                                    alert('增加成功');
+                                    console.log(re)
+                                    // this.$router.go(-1);
+                                })
+                                .catch(error => console.log(error))
+                        }
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -78,13 +104,15 @@
                 // 通过 `vm` 访问组件实例
                 let re = to.query;
                 if (!!re.data) {
-                    vm.ruleForm = re.data
+                    vm.ruleForm = re.data;
+                    console.log(vm.ruleForm)
                 } else {
                     vm.ruleForm = {
-                        name: '',
-                        type: '',
-                        labels: [],
-                        describe: ''
+                        chatRoomName: '',
+                        chatRoomType: '',
+                        tag: [],
+                        describe: '',
+                        chatId:''
                     };
                 }
             })
