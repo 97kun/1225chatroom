@@ -1,28 +1,30 @@
 <template>
-    <form id="register" ref="register" @submit.prevent="submit"
-          v-loading.fullscreen="loading"
-          element-loading-text="拼命加载中"
-          element-loading-spinner="el-icon-loading"
-          element-loading-background="rgba(0, 0, 0, 0.8)">
-        <div>
-            <label for="reusername">用户名:</label>
-            <input type="text" id="reusername" name="reusername" v-model="reusername" required placeholder="请输入用户名">
-        </div>
-        <div>
-            <label for="repassword">密码:</label>
-            <input type="password" id="repassword" v-model="repassword" name="repassword" required
-                   placeholder="请输入注册密码">
-        </div>
-        <div>
-            <label for="makesure">确认密码:</label>
-            <input type="password" id="makesure" v-model="makesure" name="makesure" required placeholder="请输确认入密码">
-        </div>
-        <div class="uppicturebox">
-            <input type="file" class="zhizhao" id="zhizhao" name="zhizhao" @change="up" style="">
-            <img id="pto" style="" :src="image">
-        </div>
-        <button type="submit" id="submitbutton">提交</button>
-    </form>
+    <div>
+        <form id="register" ref="register" @submit.prevent="submit"
+              v-loading.fullscreen="loading"
+              element-loading-text="拼命加载中"
+              element-loading-spinner="el-icon-loading"
+              element-loading-background="rgba(0, 0, 0, 0.8)">
+            <div>
+                <label for="reusername">用户名:</label>
+                <input type="text" id="reusername" name="reusername" v-model="reusername" required placeholder="请输入用户名">
+            </div>
+            <div>
+                <label for="repassword">密码:</label>
+                <input type="password" id="repassword" v-model="repassword" name="repassword" required
+                       placeholder="请输入注册密码">
+            </div>
+            <div>
+                <label for="makesure">确认密码:</label>
+                <input type="password" id="makesure" v-model="makesure" name="makesure" required placeholder="请输确认入密码">
+            </div>
+            <div class="uppicturebox">
+                <input type="file" class="zhizhao" id="zhizhao" name="zhizhao" @change="up" style="">
+                <img id="pto" style="" :src="image">
+            </div>
+            <button type="submit" id="submitbutton">提交</button>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -53,6 +55,14 @@
                     this.loading = true;
                     this.axios.post('zk/im/api/usermessage/insert', data)
                         .then(re => {
+                            console.log(re);
+                            if (re.data === 666) {
+                                this.$notify({
+                                    title: '警告',
+                                    message: '用户名已存在',
+                                    type: 'warning'
+                                });
+                            }
                             this.loading = false;
                         })
                         .catch(error => {
@@ -117,9 +127,9 @@
                     dealImage(e.target.result, 800, printing);
 
                     function printing(base64) {
-                        // console.log("压缩后", base64.length / 1024);
+                        console.log("压缩后", base64.length / 1024);
                         // _this.picture = e.target.result;
-                        _this.image = e.target.result;
+                        _this.image = base64;
                         // console.log(_this.image)
                     }
 
@@ -145,55 +155,106 @@
         margin: 5px 0;
     }
 
-    input {
-        width: 330px;
-        height: 40px;
-        border: 0;
-        background: transparent;
-        /*border-bottom: 1px solid skyblue;*/
-        outline: none;
-        color: white;
-        padding-left: 15px;
-        font-size: 16px;
-    }
+        input {
+            width: 330px;
+            height: 40px;
+            border: 0;
+            background: transparent;
+            /*border-bottom: 1px solid skyblue;*/
+            outline: none;
+            color: white;
+            padding-left: 15px;
+            font-size: 16px;
+        }
 
-    label {
-        width: 100px;
-        text-align: right;
-        padding-right: 15px;
-        color: lightgoldenrodyellow;
-    }
+        label {
+            width: 100px;
+            text-align: right;
+            padding-right: 15px;
+            color: lightgoldenrodyellow;
+        }
 
-    #submitbutton {
-        width: 430px;
-        height: 40px;
-        border: 0;
-        outline: none;
-        background: #504c65;
-        color: #ffffff;
-        font-size: 18px;
-    }
+        #submitbutton {
+            width: 430px;
+            height: 40px;
+            border: 0;
+            outline: none;
+            background: #504c65;
+            color: #ffffff;
+            font-size: 18px;
+        }
 
-    .uppicturebox {
-        width: 160px;
-        height: 130px;
-        margin-right: 32px;
-        position: relative;
-    }
+        .uppicturebox {
+            width: 160px;
+            height: 130px;
+            margin-right: 32px;
+            position: relative;
+        }
 
-    .zhizhao {
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        position: absolute;
-    }
+        .zhizhao {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+        }
 
-    .uppicturebox img {
-        width: 100%;
-        height: 100%;
-    }
+        .uppicturebox img {
+            width: 100%;
+            height: 100%;
+        }
 
-    button[disabled]:hover {
-        cursor: not-allowed;
+        button[disabled]:hover {
+            cursor: not-allowed;
+        }
+
+    @media screen and (max-width: 1000px) {
+        input {
+            width: 65vw;
+            height: 40px;
+            border: 0;
+            background: transparent;
+            /*border-bottom: 1px solid skyblue;*/
+            outline: none;
+            color: white;
+            padding-left: 15px;
+            font-size: 13px;
+        }
+
+        label {
+            text-align: right;
+            color: lightgoldenrodyellow;
+        }
+
+        #submitbutton {
+            width: 50vw;
+            height: 40px;
+            border: 0;
+            outline: none;
+            background: #504c65;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .uppicturebox {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .zhizhao {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+        }
+
+        .uppicturebox img {
+            width: 100%;
+            height: 100%;
+        }
+
+        button[disabled]:hover {
+            cursor: not-allowed;
+        }
     }
 </style>

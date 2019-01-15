@@ -53,7 +53,7 @@
                         {type: 'array', required: true, message: '请至少选择一个标签', trigger: 'change'}
                     ],
                     describe: [
-                        {required: true, message: '请填写活动形式', trigger: 'blur'}
+                        {required: true, message: '请填写聊天室描述', trigger: 'blur'}
                     ]
                 }
             };
@@ -68,7 +68,9 @@
                             chatRoomType: this.ruleForm.chatRoomType,
                             describe: this.ruleForm.describe,
                             tag: JSON.stringify(this.ruleForm.tag),
-                            chatId:this.ruleForm.chatId
+                            chatId:this.ruleForm.chatId,
+                            creatTime:date,
+                            creator:this.$store.state.user.username
                         };
                         console.log(!!data.chatId)
                         if (!!data.chatId){
@@ -79,8 +81,6 @@
                                 })
                                 .catch(error => console.log(error))
                         } else {
-                            data.creatTime=date;
-                            data.creator='ZK';
                             this.axios.post('zk/im/api/chatroom/saveChartRoom', data)
                                 .then(re => {
                                     alert('增加成功');

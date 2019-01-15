@@ -4,12 +4,14 @@
         <!--黑板组件-->
         <blackboard  class="hidden-md-and-down"></blackboard>
         <swiperbox class="hidden-lg-and-up"></swiperbox>
+        <clock  class="hidden-lg-and-up clock"></clock>
     </div>
 </template>
 
 <script>
     import blackboard from './blackboard';
-    import swiperbox from './swiper'
+    import swiperbox from './swiper';
+    import clock from './clock';
 
     export default {
         name: "index",
@@ -18,7 +20,8 @@
         },
         components: {
             blackboard,
-            swiperbox
+            swiperbox,
+            clock
         }
 
     }
@@ -33,11 +36,19 @@
         background-position: center center;
         padding-top: 56px;
         height: 100%;
+        overflow: hidden;
     }
 
     #midtext {
         text-align: center;
         color: white;
+    }
+
+    .clock{
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%,0) scale(0.5);
     }
 
     @media screen and (max-width: 990px) {

@@ -11,73 +11,20 @@ import axios from 'axios';
 import Vuex from 'vuex';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
+import {Notification} from 'element-ui';
+
+import routes from './router/route'
 
 Vue.use(VueAwesomeSwiper);
-
-
-// 组件引入
-import HNav from './components/nav';
-import Index from './components/index';
-import Home from './components/home';
-import First from './components/first'
-import Login from './components/login';
-import Register from './components/register';
-import SIdentify from './components/identify';
-import sidentify from './components/identify';
-import Me from './components/me';
-import Chatroomlist from './components/chatroomlist';
-import Chatwindow from './components/chatwindow';
-import Test from './components/test';
-import Adminlist from './components/adminList';
-import Editchatroom from './components/editchatroom';
-import Addnews from './components/addnews';
-import Newslist from './components/newslist';
-import NewsDigital from './components/newsdigital';
-import {Notification} from 'element-ui'
 
 
 Vue.config.productionTip = false;
 Vue.use(Router);
 Vue.use(Vuex);
 Vue.use(ElementUI);
-Vue.use(SIdentify);
 Vue.use(BootstrapVue);
 Vue.prototype.axios = axios;
-Vue.component('HNav', HNav);
 
-const routes = [
-    {path: "/", component: Index},
-    {path: "/Test", component: Test},
-    {
-        path: "/Home", component: Home,
-        redirect: '/Adminlist',
-        meta: {
-            title: "管理员"
-        },
-        children: [
-            {path: '/Adminlist', component: Adminlist},
-            {path: '/Addnews', component: Addnews}
-        ]
-    },
-    {path: '/Editchatroom', component: Editchatroom, name: 'Editchatroom'},
-    {
-        path: "/First", component: First,
-        redirect: '/Login',
-        meta: {
-            title: "登录注册"
-        },
-        children: [
-            {path: "/Login", component: Login},
-            {path: "/Register", component: Register}
-        ]
-    },
-    {path: "/Me", component: Me},
-    {path: "/Chatroomlist", component: Chatroomlist},
-    {path: "/Chatwindow", component: Chatwindow},
-    {path: "/Newslist", component: Newslist},
-    {path: "/NewsDigital", component: NewsDigital, name: 'NewsDigital'},
-    {path: "*", redirect: '/'}
-];
 
 const store = new Vuex.Store({
     state: {
@@ -86,7 +33,7 @@ const store = new Vuex.Store({
         warm: "",
         wendu: "",
         user: JSON.parse(localStorage.getItem('user')),
-        logined: !!JSON.parse(localStorage.getItem('user'))
+        logined: JSON.parse(localStorage.getItem('user')),
     },
     getters: {
         loginstatus: state => {
@@ -106,7 +53,6 @@ let router = new Router({
     // mode:"history"
 });
 
-Vue.component('sidentify', sidentify);
 
 new Vue({
     render: h => h(App),

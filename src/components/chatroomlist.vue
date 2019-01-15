@@ -77,9 +77,10 @@
 <style scoped>
     #chatroomlist {
         padding-top: 56px;
-        height: 100vh;
+        min-height: 100vh;
         background: url("../assets/images/chatroomlist.jpg") no-repeat;
         background-size: cover;
+        background-attachment: fixed;
     }
 
     .card-text {
@@ -103,5 +104,18 @@
     .footernav {
         position: fixed;
         bottom: 0;
+    }
+
+    @media screen and (max-width: 780px) {
+        .mb-2 img {
+            display: none;
+        }
+
+        .mb-2{
+            width: 100vw;
+            color: wheat;
+            background: url("../assets/images/5-120601095940.jpg");
+            background-size: 100% 100%;
+        }
     }
 </style>

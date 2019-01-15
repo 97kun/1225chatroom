@@ -17,8 +17,7 @@
                 </b-nav-text>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-
-                    <b-nav-item-dropdown text="管理员" right>
+                    <b-nav-item-dropdown text="管理员" class="hidden-md-and-down" right>
                         <b-dropdown-item to="/Home">聊天室维护</b-dropdown-item>
                         <b-dropdown-item to="/Addnews">新闻发布</b-dropdown-item>
                     </b-nav-item-dropdown>
@@ -29,7 +28,8 @@
                             <em >{{(!this.$store.getters.loginstatus)?'请登录':this.$store.state.user.username}}</em>
                         </template>
                         <b-dropdown-item to="/Chatroomlist">聊天室列表</b-dropdown-item>
-                        <b-dropdown-item to="/Me">个人中心</b-dropdown-item>
+                        <b-dropdown-item to="/AutoTalk">智能聊天系统</b-dropdown-item>
+                        <b-dropdown-item :to="{path: '/Me',query:{name:this.$store.state.user.username}}">个人中心</b-dropdown-item>
                         <b-dropdown-item @click="exit">退出登录</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
@@ -60,5 +60,8 @@
 
     .el-loading-mask {
         z-index: 99;
+    }
+    .header{
+        background: rgb(0,0,0)!important;
     }
 </style>

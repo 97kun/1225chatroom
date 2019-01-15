@@ -30,8 +30,8 @@
             init(){
                 var editor = new E('#editor','#editor2');
                 let _this=this;
-                editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片;
-                editor.create()
+                editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片;
+                editor.create();
                 document.getElementById('subnews').addEventListener('click', function () {
                     // 读取 html
                    _this.content=editor.txt.html();

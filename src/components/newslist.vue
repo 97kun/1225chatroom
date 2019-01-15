@@ -59,8 +59,9 @@
                                 time: new Date(i.createtime).toLocaleString(),
                                 title: i.title,
                                 sender: i.sender,
-                                content: i.content
-                            }
+                                content: i.content,
+                                id:i.id
+                            };
                             this.items.push(zan)
                         }
                         this.items.reverse();

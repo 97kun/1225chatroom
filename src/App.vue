@@ -2,16 +2,16 @@
     <div id="app">
         <HNav></HNav>
         <transition name="approuterbox">
-            <keep-alive>
+            <!--<keep-alive>-->
                 <router-view class="approuterview"></router-view>
-            </keep-alive>
+            <!--</keep-alive>-->
         </transition>
     </div>
 </template>
 
 <script>
     var timer = null;
-
+    import HNav from './components/nav'
     export default {
         name: 'app',
         data() {
@@ -19,7 +19,9 @@
                 // warm:"",
             }
         },
-        components: {},
+        components: {
+            HNav
+        },
         methods: {
             gettq() {
                 function myFun(result) {
@@ -59,7 +61,7 @@
             }
         },
         created() {
-            console.log("%c请你善良，看见bug默默走开就好", "font-size:35px;color:blue")
+            console.log("%c请你善良，看见bug默默走开就好", "font-size:35px;color:blue");
             this.gettq();
             this.iflogin();
         }

@@ -2,8 +2,9 @@
     <div id="swiperbox">
         <swiper :options="swiperOption" ref="mySwiper" id="swiperOption">
             <!-- slides -->
-            <swiper-slide class="slide swiperslide1"><p swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s">0.0</p></swiper-slide>
+            <swiper-slide class="slide swiperslide1">等你畅聊</swiper-slide>
             <swiper-slide class="slide swiperslide2">等你畅聊</swiper-slide>
+            <swiper-slide class="slide swiperslide3">等你畅聊</swiper-slide>
             <!-- Optional controls -->
             <div class="swiper-pagination" slot="pagination"></div>
             <div class="swiper-button-prev" slot="button-prev"></div>
@@ -72,10 +73,21 @@
         color: white;
     }
     .swiperslide1 {
-        /*background: url("../assets/images/hu2.jpg") no-repeat;*/
+        background: url("../assets/images/7472d092f7e907221c512e7656932b3.jpg") no-repeat;
     }
 
     .swiperslide2 {
-        /*background: url("../assets/images/hu1.jpg") no-repeat;*/
+        background: url("../assets/images/340dffd6adf4f4c005d685f3169e330.jpg") no-repeat;
+    }
+
+    .swiperslide3{
+        background: url("../assets/images/1b4d36434343c4bc70646e9e366c63b.jpg") no-repeat;
+    }
+    .slide{
+        background-size: 100% 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
     }
 </style>

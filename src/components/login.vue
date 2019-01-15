@@ -27,6 +27,8 @@
 </template>
 
 <script>
+    import sidentify from './identify'
+
     export default {
         name: "login",
         data() {
@@ -43,13 +45,10 @@
             this.identifyCode = "";
             this.makeCode(this.identifyCodes, 4);
         },
-        computed: {
-            // 三个框都有值时允许button被点击
-            /* allow: function () {
-                 return (!(this.username && this.password && this.yzm));
-             }*/
-        }
-        ,
+        computed: {},
+        components: {
+            sidentify
+        },
         methods: {
             randomNum(min, max) {
                 return Math.floor(Math.random() * (max - min) + min);
@@ -74,7 +73,7 @@
                     this.loading = true;
                     let params = new URLSearchParams();
                     params.append('username', this.username);
-                    params.append('password', this.password)
+                    params.append('password', this.password);
                     this.axios.post(`zk/im/api/usermessage/selectUser`, params)
                         .then(re => {
                             this.loading = false;
@@ -178,5 +177,45 @@
 
     .cav {
         height: 60px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        #login{
+            font-size: 13px;
+        }
+        input {
+            width: 65vw;
+            height: 40px;
+            border: 0;
+            background: transparent;
+            /*border-bottom: 1px solid skyblue;*/
+            outline: none;
+            color: white;
+            padding-left: 15px;
+            font-size: 13px;
+        }
+
+        label {
+            text-align: right;
+            color: lightgoldenrodyellow;
+        }
+
+        button {
+            width: 50vw;
+            height: 40px;
+            border: 0;
+            outline: none;
+            background: #504c65;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        button[disabled]:hover {
+            cursor: not-allowed;
+        }
+
+        .cav {
+            height: 60px;
+        }
     }
 </style>
